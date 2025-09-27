@@ -103,7 +103,7 @@ class ClientController extends Controller
             array(
                 'name'=>$request->name,
                 'lastname'=>$request->lastname,
-                'email'=>$request->email,
+                'email'=>$request->email?$request->email:"",
                 'phone'=>$request->phone,
                 'register_date' => $request->register_date,
         ));
