@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('payment_items', function (Blueprint $table) {
             $table->id();
-            $table->integer('quantity');
+            $table->string('concept');
             $table->string('description');
+            $table->integer('quantity');
             $table->decimal('price_by_unit', 10, 2);
             $table->decimal('subtotal', 10, 2);
             $table->unsignedBigInteger('payment_id');

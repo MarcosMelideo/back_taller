@@ -86,8 +86,9 @@ class PaymentController extends Controller
                 foreach ($request->paymentItems as $item) {
                     $paymentItems = new PaymentItem();
                     $paymentItems->payment_id = $payment_id;
-                    $paymentItems->quantity = $item["quantity"];
+                    $paymentItems->concept = $item["concept"];
                     $paymentItems->description = $item["description"];
+                    $paymentItems->quantity = $item["quantity"];
                     $paymentItems->price_by_unit = $item["price_by_unit"];
                     $paymentItems->subtotal = $item["subtotal"];
                     $paymentItems->save();

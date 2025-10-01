@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Paymentitem extends Model
 {
     protected $table = 'payment_items';
-    protected $fillable = ['quantity','description', 'price_by_unit', 'subtotal', 'payment_id'];
+    protected $fillable = ['concept', 'description','quantity', 'price_by_unit', 'subtotal', 'payment_id'];
     use HasFactory;
     use SoftDeletes;
     
