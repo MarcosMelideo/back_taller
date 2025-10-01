@@ -43,7 +43,7 @@ class ClientController extends Controller
         ]);
  
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(),422);
+            return response()->json($validator->errors()->toJson(),400);
         }
         try{
             DB::transaction(function() use ($request) {
@@ -58,7 +58,7 @@ class ClientController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'error' => $e,
-            ], 405);
+            ], 409);
         }
         return response()->json([
             'message' => '¡Cliente registrado exitosamente!',
@@ -96,7 +96,7 @@ class ClientController extends Controller
         ]);
  
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(),422);
+            return response()->json($validator->errors()->toJson(), 400);
         }
 
         Client::findOrFail($id)->update(
@@ -108,7 +108,7 @@ class ClientController extends Controller
                 'register_date' => $request->register_date,
         ));
         
-        return response()->json(['message' => '¡Cliente actualizado exitosamente!'], 201);
+        return response()->json(['message' => '¡Cliente actualizado exitosamente!'], 200);
 
     }
 
@@ -120,10 +120,10 @@ class ClientController extends Controller
         if ($this->hasVehicle($id)->original) {
             return response()->json([
                 'error' => "El cliente tiene vehiculos asociados",
-            ], 405);
+            ], 409);
         }else{
             Client::findOrFail($id)->delete();
-            return response()->json(['message' => '¡Cliente eliminado exitosamente!'], 201);
+            return response()->json(['message' => '¡Cliente eliminado exitosamente!'], 200);
         }
     }
 
@@ -137,7 +137,7 @@ class ClientController extends Controller
     {
         $client = Client::onlyTrashed()->find($id);
         $client->restore();
-        return response()->json(['message' => '¡Cliente restaurado exitosamente!'], 201);
+        return response()->json(['message' => '¡Cliente restaurado exitosamente!'], 200);
     }
 
     public function isDuplicated($name, $lastname){

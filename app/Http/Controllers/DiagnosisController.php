@@ -21,6 +21,25 @@ class DiagnosisController extends Controller
         return response()->json($diagnoses);
     }
 
+    public function diagnosesByClientId($client_id)
+    {
+        $sql = 'SELECT *
+        FROM diagnoses 
+        WHERE deleted_at is null 
+        AND client_id LIKE '.$client_id;
+        $diagnoses = DB::select($sql);
+        return response()->json($diagnoses);
+    }
+
+    public function diagnosesByVehicleId($vehicle_id){
+        $sql = 'SELECT *
+        FROM diagnoses 
+        WHERE deleted_at is null 
+        AND vehicle_id LIKE '.$vehicle_id;
+        $diagnoses = DB::select($sql);
+        return response()->json($diagnoses);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -128,7 +147,7 @@ class DiagnosisController extends Controller
     
         return response()->json([
             'message' => '¡Diagnostico actualizado exitosamente!',
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -137,7 +156,7 @@ class DiagnosisController extends Controller
     public function destroy(string $id)
     {
         Diagnosis::findOrFail($id)->delete();
-        return response()->json(['message' => '¡diagnostico eliminado exitosamente!'], 201);
+        return response()->json(['message' => '¡diagnostico eliminado exitosamente!'], 200);
     }
 
     public function deletedDiagnoses()
@@ -150,6 +169,6 @@ class DiagnosisController extends Controller
     {
         $diagnosis = Diagnosis::onlyTrashed()->find($id);
         $diagnosis->restore();
-        return response()->json(['message' => '¡Diagnostico restaurado exitosamente!'], 201);
+        return response()->json(['message' => '¡Diagnostico restaurado exitosamente!'], 200);
     }
 }

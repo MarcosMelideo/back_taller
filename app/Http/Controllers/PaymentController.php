@@ -107,7 +107,7 @@ class PaymentController extends Controller
      */
     public function show(string $id)
     {
-        $payment = Payment::find($id);
+        $payment = Payment::where('id', '=', $id)->get();
         return response()->json($payment);
     }
     
@@ -158,7 +158,7 @@ class PaymentController extends Controller
         return response()->json([
             'message' => '¡Cobro actualizado exitosamente!',
             'payment' => $payment
-        ], 201);
+        ], 200);
     }
 
     /**
@@ -175,7 +175,7 @@ class PaymentController extends Controller
             return response()->json(['message' => $e->getMessage()]);
         } finally {
             Payment::findOrFail($id)->delete();
-            return response()->json(['message' => '¡Cobro eliminado exitosamente!'], 201);
+            return response()->json(['message' => '¡Cobro eliminado exitosamente!'], 200);
         }
     }
 
@@ -189,7 +189,7 @@ class PaymentController extends Controller
     {
         $payments = Payment::onlyTrashed()->find($id);
         $payments->restore();
-        return response()->json(['message' => '¡Presupuesto restaurado exitosamente!'], 201);
+        return response()->json(['message' => '¡Presupuesto restaurado exitosamente!'], 200);
     }
 
     public function lastPaymentNumber(){

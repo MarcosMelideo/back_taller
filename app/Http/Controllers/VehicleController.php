@@ -21,7 +21,7 @@ class VehicleController extends Controller
         return response()->json($vehicles);
     }
 
-    public function clientVehicles($id)
+    public function vehiclesByClientId($id)
     {
         $sql = 'SELECT *, concat(brand, " ",model) AS vehicle_name
         FROM vehicles 
@@ -126,7 +126,7 @@ class VehicleController extends Controller
             )
         );
 
-        return response()->json(['message' => '¡Vehiculo actualizado exitosamente!'], 201);
+        return response()->json(['message' => '¡Vehiculo actualizado exitosamente!'], 200);
     }
 
     /**
@@ -135,7 +135,7 @@ class VehicleController extends Controller
     public function destroy(string $id)
     {
         Vehicle::findOrFail($id)->delete();
-        return response()->json(['message' => '¡Vehiculo eliminado exitosamente!'], 201);
+        return response()->json(['message' => '¡Vehiculo eliminado exitosamente!'], 200);
     }
 
     public function deletedVehicles()
@@ -148,6 +148,6 @@ class VehicleController extends Controller
     {
         $vehicle = Vehicle::onlyTrashed()->find($id);
         $vehicle->restore();
-        return response()->json(['message' => '¡Vehiculo restaurado exitosamente!'], 201);
+        return response()->json(['message' => '¡Vehiculo restaurado exitosamente!'], 200);
     }
 }
